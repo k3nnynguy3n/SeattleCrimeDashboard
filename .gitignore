@@ -1,0 +1,55 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+log/
+debug.log
+error.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.vscode/
+.idea/
+*.iml
+
+# MongoDB data (if using local DB storage)
+data/db/
+dump/
+
+# Build files
+dist/
+build/
+
+# Docker-related
+docker-compose.override.yml
+.dockerignore
+
+# Backend-specific
+backend/node_modules/
+backend/.env
+backend/logs/
+
+# Frontend-specific
+frontend/node_modules/
+frontend/.env
+frontend/build/
+
+# CSV Data (if needed)
+data/*.csv
+data/*.json
+
+# Miscellaneous
+*.swp
+*.swo
+*.bak
+*.tmp
