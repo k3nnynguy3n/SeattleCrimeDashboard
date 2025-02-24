@@ -11,7 +11,7 @@ The dashboard itself manages over 1.1 million crime reports, allowing the filter
 
 I hope that this tool can bridge the gap between raw data and useful information, delivering interactive analytics, crime mapping, and future projections to support crime prevention and public safety.  
 
-📊 **Dataset Source:** [Seattle Open Data Crime Reports](https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5)
+📊 **Dataset Source:** [Seattle Open Data Crime Reports]([https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5](https://www.seattle.gov/police/information-and-data/data/public-data-sets))
 
 ## 🎯 Features  
 
@@ -33,7 +33,7 @@ I hope that this tool can bridge the gap between raw data and useful information
 | **Category**         | **Technologies**                      |
 |----------------------|--------------------------------------|
 | **Backend**         | Node.js, Express.js, MongoDB Atlas   |
-| **Frontend**        | D3.js, React.js *(future feature)*   |
+| **Frontend**        | D3.js, React.js                      |
 | **Data Processing** | csvtojson, Mongoose                  |
 | **Deployment**      | AWS *(Future Deployment)*            |
 
