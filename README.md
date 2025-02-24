@@ -1,7 +1,7 @@
-# SeattleCrimeDashboard - 🚧 Currently in progress! 
-📍 Analyzing and Predicting Crime Trends in Seattle (2008 - February 4th, 2020)
+# 📝 SeattleCrimeDashboard - 🚧 Currently in progress! 
+Analyzing and Predicting Crime Trends in Seattle (2008 - February 4th, 2020)
 
-## Overview 
+## 📍 Overview 
 Over the past few years, crime has risen sharply in Seattle, with homicides increasing more than 75% and significant increases in assaults, robberies, and property crime. This rise in criminal activity created alarm about public safety, law enforcement practices, and crime prevention strategies.
 
 I created the Seattle Crime Data Dashboard as a tool to visualize and analyze crime trends, placing real data in the hands of citizens, researchers, and policy makers to be interpreted and accessed. With data-driven analysis, we can identify trends, hotspots, and emerging threats, allowing decision-making to be more intelligent in fighting crime.
