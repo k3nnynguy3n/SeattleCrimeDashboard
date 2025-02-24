@@ -11,8 +11,7 @@ The dashboard itself manages over 1.1 million crime reports, allowing the filter
 
 I hope that this tool can bridge the gap between raw data and useful information, delivering interactive analytics, crime mapping, and future projections to support crime prevention and public safety.  
 
-📊 **Dataset Source:** [Seattle Open Data Crime Reports]([https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5/about_data](https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5/about_data))  
-
+📊 **Dataset Source:** [Seattle Open Data Crime Reports](https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5)
 
 ## 🎯 Features  
 
