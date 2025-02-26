@@ -53,3 +53,6 @@ data/*.json
 *.swo
 *.bak
 *.tmp
+
+# Large files
+backend/data/
