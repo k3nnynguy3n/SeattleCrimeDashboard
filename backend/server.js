@@ -1,7 +1,7 @@
+require('dotenv').config(); 
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors'); 
-require('dotenv').config(); 
 
 const app = express(); 
 
@@ -12,23 +12,9 @@ connectDB();
 app.use(cors());            // Allow frontend to access backend API
 app.use(express.json());    // Allow JSON requests
 
-// Route for health check
-app.get('/', (req, res) => {
-    res.send("MongoDB Atlas is connected!");
-});
-
-// API Test Route
-app.get('/test', async (req, res) => {
-    res.send("This is a test!")
-});
-
-// Import crime model
-const crime = require('./models/crime');
-
-// API route to retrieve all crime data
-app.get('/crime-data', async (req, res) => {
-    
-});
+// Routes 
+app.use('/', require('./routes/crimeRoutes'));
+app.use('/totalCrime', require('./routes/crimeRoutes'));
 
 // Start the server
 const PORT = process.env.PORT || 3000;
