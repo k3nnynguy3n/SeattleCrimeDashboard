@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { motion } from "framer-motion";
 import DropdownButton from "../components/dropdownButton";
-import "../styles/app.css"; 
+import "../styles/app.css";
 
 const App = () => {
   const [crimeData, setCrimeData] = useState(0);
   const [filters, setFilters] = useState({
     victimAge: null, victimSex: null,
     suspectAge: null, suspectSex: null,
-    time: null, category: null
+    time: null, category: null,
+    charge: null, crimeCommitted: null
   });
 
   const fetchCrimeCount = () => {
@@ -19,7 +19,7 @@ const App = () => {
     });
 
     axios
-      .get(`http://localhost:3000/api/crime-data/filtered-total?${query}`)
+      .get(`http://localhost:5000/api/crime-data/filtered-total?${query}`)
       .then((response) => setCrimeData(response.data.totalCrimes))
       .catch((error) => console.error("Error fetching crime count:", error));
   };
@@ -30,11 +30,10 @@ const App = () => {
 
   return (
     <div className="container">
-      <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-        Seattle Crime Dashboard
-      </motion.h1>
+      {/* Left Side Filter Panel */}
+      <div className="filter-panel">
+        <h2>Filters</h2>
 
-      <div className="filter-section">
         <DropdownButton label="Victim" options={{
           Age: [18, 25, 35, 50, 65],
           Sex: ["Male", "Female"]
@@ -47,11 +46,18 @@ const App = () => {
 
         <DropdownButton label="Crime Filters" options={{
           Time: ["Morning", "Afternoon", "Evening", "Night"],
-          Category: ["PROPERTY", "SOCIETY", "LARCENY-THEFT", "ROBBERY"]
-        }} setFilters={setFilters} keys={["time", "category"]} />
+          Category: ["PROPERTY", "SOCIETY", "LARCENY-THEFT", "ROBBERY"],
+          Charge: ["Assault", "Burglary", "Fraud", "Vandalism"],
+          CrimeCommitted: ["Shoplifting", "Drug Possession", "DUI", "Homicide"]
+        }} setFilters={setFilters} keys={["time", "category", "charge", "crimeCommitted"]} />
       </div>
 
-      <p>Total Crimes: {crimeData}</p>
+      {/* Right Side Content */}
+      <div className="content-area">
+        <h1>Seattle Crime Dashboard</h1>
+        <p>Total Crimes: {crimeData}</p>
+        {/* Future Graph or Heatmap will be placed here */}
+      </div>
     </div>
   );
 };
