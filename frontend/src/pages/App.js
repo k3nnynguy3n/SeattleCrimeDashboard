@@ -35,20 +35,20 @@ const App = () => {
         <h2>Filters</h2>
 
         <DropdownButton label="Victim" options={{
-          Age: [18, 25, 35, 50, 65],
-          Sex: ["Male", "Female"]
+          "Age Range": ["0-12 Child", "13-17 Teen", "18-25 Young Adult", "26+ Adult"],
+          "Sex": ["Male", "Female"]
         }} setFilters={setFilters} keys={["victimAge", "victimSex"]} />
 
         <DropdownButton label="Suspect" options={{
-          Age: [18, 25, 35, 50, 65],
-          Sex: ["Male", "Female"]
+          "Age Range": ["0-12 Child", "13-17 Teen", "18-25 Young Adult", "26+ Adult"],
+          "Sex": ["Male", "Female"]
         }} setFilters={setFilters} keys={["suspectAge", "suspectSex"]} />
 
         <DropdownButton label="Crime Filters" options={{
-          Time: ["Morning", "Afternoon", "Evening", "Night"],
-          Category: ["PROPERTY", "SOCIETY", "LARCENY-THEFT", "ROBBERY"],
-          Charge: ["Assault", "Burglary", "Fraud", "Vandalism"],
-          CrimeCommitted: ["Shoplifting", "Drug Possession", "DUI", "Homicide"]
+          "Time": ["Morning", "Afternoon", "Evening", "Night"],
+          "Category": ["PROPERTY", "SOCIETY", "LARCENY-THEFT", "ROBBERY"],
+          "Charge": ["Assault", "Burglary", "Fraud", "Vandalism"],
+          "Crime Committed": ["Shoplifting", "Drug Possession", "DUI", "Homicide"]
         }} setFilters={setFilters} keys={["time", "category", "charge", "crimeCommitted"]} />
       </div>
 
