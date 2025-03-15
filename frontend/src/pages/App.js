@@ -1,32 +1,46 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DropdownButton from "../components/dropdownButton";
 import "../styles/app.css";
 
 const App = () => {
-  const [crimeData, setCrimeData] = useState(0);
+  const [crimeData, setCrimeData] = useState([]);
   const [filters, setFilters] = useState({
-    victimAge: null, victimSex: null,
-    suspectAge: null, suspectSex: null,
-    time: null, category: null,
-    charge: null, crimeCommitted: null
+    year: null,
+    time: null,
+    nibrsGroup: null,
+    nibrsOffenseCode: "",
+    address: ""
   });
 
-  const fetchCrimeCount = () => {
-    let query = "";
-    Object.keys(filters).forEach((key) => {
-      if (filters[key]) query += `&${key}=${filters[key]}`;
-    });
+  // Available filter options
+  const years = Array.from({ length: 2020 - 2008 + 1 }, (_, i) => (2008 + i).toString());
+  const timeOptions = ["Morning (5 AM - 11:59 AM)", "Afternoon (12 PM - 4:59 PM)", "Evening (5 PM - 8:59 PM)", "Night (9 PM - 4:59 AM)"];
+  const nibrsGroups = ["A", "B"];
+
+  const fetchCrimeData = () => {
+    const queryParams = new URLSearchParams(filters);
+    const apiUrl = `http://localhost:5000/api/crime-data?${queryParams.toString()}`;
 
     axios
-      .get(`http://localhost:5000/api/crime-data/filtered-total?${query}`)
-      .then((response) => setCrimeData(response.data.totalCrimes))
-      .catch((error) => console.error("Error fetching crime count:", error));
+      .get(apiUrl)
+      .then((response) => setCrimeData(response.data))
+      .catch((error) => console.error("Error fetching crime data:", error));
   };
 
   useEffect(() => {
-    fetchCrimeCount();
+    fetchCrimeData();
   }, [filters]);
+
+  // Reset all filters
+  const resetFilters = () => {
+    setFilters({
+      year: null,
+      time: null,
+      nibrsGroup: null,
+      nibrsOffenseCode: "",
+      address: ""
+    });
+  };
 
   return (
     <div className="container">
@@ -34,29 +48,87 @@ const App = () => {
       <div className="filter-panel">
         <h2>Filters</h2>
 
-        <DropdownButton label="Victim" options={{
-          "Age Range": ["0-12 Child", "13-17 Teen", "18-25 Young Adult", "26+ Adult"],
-          "Sex": ["Male", "Female"]
-        }} setFilters={setFilters} keys={["victimAge", "victimSex"]} />
+        {/* Year Filter */}
+        <div className="filter-group">
+          <h3>Year</h3>
+          <div className="button-group">
+            {years.map((year) => (
+              <button 
+                key={year} 
+                className={`filter-button ${filters.year === year ? "active" : ""}`}
+                onClick={() => setFilters((prev) => ({ ...prev, year: year === prev.year ? null : year }))}
+              >
+                {year}
+              </button>
+            ))}
+          </div>
+        </div>
 
-        <DropdownButton label="Suspect" options={{
-          "Age Range": ["0-12 Child", "13-17 Teen", "18-25 Young Adult", "26+ Adult"],
-          "Sex": ["Male", "Female"]
-        }} setFilters={setFilters} keys={["suspectAge", "suspectSex"]} />
+        {/* Time of Day Filter */}
+        <div className="filter-group">
+          <h3>Time of Day</h3>
+          <div className="button-group">
+            {timeOptions.map((time) => (
+              <button 
+                key={time} 
+                className={`filter-button ${filters.time === time ? "active" : ""}`}
+                onClick={() => setFilters((prev) => ({ ...prev, time: time === prev.time ? null : time }))}
+              >
+                {time}
+              </button>
+            ))}
+          </div>
+        </div>
 
-        <DropdownButton label="Crime Filters" options={{
-          "Time": ["Morning", "Afternoon", "Evening", "Night"],
-          "Category": ["PROPERTY", "SOCIETY", "LARCENY-THEFT", "ROBBERY"],
-          "Charge": ["Assault", "Burglary", "Fraud", "Vandalism"],
-          "Crime Committed": ["Shoplifting", "Drug Possession", "DUI", "Homicide"]
-        }} setFilters={setFilters} keys={["time", "category", "charge", "crimeCommitted"]} />
+        {/* NIBRS Group Filter */}
+        <div className="filter-group">
+          <h3>NIBRS Group</h3>
+          <div className="button-group">
+            {nibrsGroups.map((group) => (
+              <button 
+                key={group} 
+                className={`filter-button ${filters.nibrsGroup === group ? "active" : ""}`}
+                onClick={() => setFilters((prev) => ({ ...prev, nibrsGroup: group === prev.nibrsGroup ? null : group }))}
+              >
+                {group}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* NIBRS Offense Code Search */}
+        <div className="search-container">
+          <h3>NIBRS Offense Code</h3>
+          <input
+            type="text"
+            placeholder="Enter Offense Code"
+            className="search-input"
+            value={filters.nibrsOffenseCode}
+            onChange={(e) => setFilters((prev) => ({ ...prev, nibrsOffenseCode: e.target.value }))}
+          />
+        </div>
+
+        {/* Address/Neighborhood Search */}
+        <div className="search-container">
+          <h3>Address/Neighborhood</h3>
+          <input
+            type="text"
+            placeholder="Enter Address/Neighborhood"
+            className="search-input"
+            value={filters.address}
+            onChange={(e) => setFilters((prev) => ({ ...prev, address: e.target.value }))}
+          />
+        </div>
+
+        {/* Reset Filters Button - Added at the Bottom */}
+        <button className="reset-button" onClick={resetFilters}>Reset Filters</button>
       </div>
 
-      {/* Right Side Content */}
+      {/* Right Side Content (Future Map) */}
       <div className="content-area">
         <h1>Seattle Crime Dashboard</h1>
-        <p>Total Crimes: {crimeData}</p>
-        {/* Future Graph or Heatmap will be placed here */}
+        <p>Total Crimes: {crimeData.length}</p>
+        {/* Future Graph or Heatmap goes here */}
       </div>
     </div>
   );
