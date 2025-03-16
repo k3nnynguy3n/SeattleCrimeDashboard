@@ -6,24 +6,18 @@ const App = () => {
   const [crimeData, setCrimeData] = useState([]);
   const [filters, setFilters] = useState({
     year: null,
-    time: null,
     nibrsGroup: null,
     nibrsOffenseCode: "",
-    address: ""
+    address: "",
   });
-
-  // Available filter options
-  const years = Array.from({ length: 2020 - 2008 + 1 }, (_, i) => (2008 + i).toString());
-  const timeOptions = ["Morning (5 AM - 11:59 AM)", "Afternoon (12 PM - 4:59 PM)", "Evening (5 PM - 8:59 PM)", "Night (9 PM - 4:59 AM)"];
-  const nibrsGroups = ["A", "B"];
 
   const fetchCrimeData = () => {
     const queryParams = new URLSearchParams(filters);
-    const apiUrl = `http://localhost:5000/api/crime-data?${queryParams.toString()}`;
+    const apiUrl = `http://localhost:5000/api/crimes/filtered-crimes?${queryParams.toString()}`;
 
     axios
       .get(apiUrl)
-      .then((response) => setCrimeData(response.data))
+      .then((response) => setCrimeData(response.data.data))
       .catch((error) => console.error("Error fetching crime data:", error));
   };
 
@@ -35,10 +29,9 @@ const App = () => {
   const resetFilters = () => {
     setFilters({
       year: null,
-      time: null,
       nibrsGroup: null,
       nibrsOffenseCode: "",
-      address: ""
+      address: "",
     });
   };
 
@@ -52,7 +45,7 @@ const App = () => {
         <div className="filter-group">
           <h3>Year</h3>
           <div className="button-group">
-            {years.map((year) => (
+            {Array.from({ length: 2020 - 2008 + 1 }, (_, i) => (2008 + i).toString()).map((year) => (
               <button 
                 key={year} 
                 className={`filter-button ${filters.year === year ? "active" : ""}`}
@@ -64,27 +57,11 @@ const App = () => {
           </div>
         </div>
 
-        {/* Time of Day Filter */}
-        <div className="filter-group">
-          <h3>Time of Day</h3>
-          <div className="button-group">
-            {timeOptions.map((time) => (
-              <button 
-                key={time} 
-                className={`filter-button ${filters.time === time ? "active" : ""}`}
-                onClick={() => setFilters((prev) => ({ ...prev, time: time === prev.time ? null : time }))}
-              >
-                {time}
-              </button>
-            ))}
-          </div>
-        </div>
-
         {/* NIBRS Group Filter */}
         <div className="filter-group">
           <h3>NIBRS Group</h3>
           <div className="button-group">
-            {nibrsGroups.map((group) => (
+            {["A", "B"].map((group) => (
               <button 
                 key={group} 
                 className={`filter-button ${filters.nibrsGroup === group ? "active" : ""}`}
@@ -120,15 +97,22 @@ const App = () => {
           />
         </div>
 
-        {/* Reset Filters Button - Added at the Bottom */}
+        {/* Reset Filters Button */}
         <button className="reset-button" onClick={resetFilters}>Reset Filters</button>
       </div>
 
-      {/* Right Side Content (Future Map) */}
+      {/* Right Side Content */}
       <div className="content-area">
         <h1>Seattle Crime Dashboard</h1>
-        <p>Total Crimes: {crimeData.length}</p>
-        {/* Future Graph or Heatmap goes here */}
+        <p>Total Crimes Found: {crimeData.length}</p>
+        {/* Displaying crime data (for debugging) */}
+        <ul>
+          {crimeData.slice(0, 10).map((crime, index) => (
+            <li key={index}>
+              {crime["Offense"]} - {crime["100 Block Address"]}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
