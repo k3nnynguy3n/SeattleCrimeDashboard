@@ -1,21 +1,16 @@
-require('dotenv').config(); 
-const express = require('express');
-const connectDB = require('./config/db');
-const cors = require('cors'); 
+const express = require("express");
+const connectDB = require("./config/db");
+const cors = require("cors");
 
-const app = express(); 
+const app = express();
+app.use(cors()); // Enable CORS for frontend access
+app.use(express.json());
 
-// Connect to MongoDB Atlas
-connectDB(); 
+// Connect to MongoDB
+connectDB();
 
-// Middleware
-app.use(cors());            // Allow frontend to access backend API
-app.use(express.json());    // Allow JSON requests
+// Import and use routes
+app.use("/api/crimes", require("./routes/crimeRoutes"));
 
-// Routes 
-app.use('/', require('./routes/crimeRoutes'));
-app.use('/totalCrime', require('./routes/crimeRoutes'));
-
-// Start the server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 6000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
