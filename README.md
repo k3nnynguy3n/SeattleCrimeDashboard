@@ -35,5 +35,5 @@ I hope that this tool can bridge the gap between raw data and useful information
 | **Backend**         | Node.js, Express.js, MongoDB Atlas, RESTful API         |
 | **Frontend**        | D3.js, React.js                                         |
 | **Data Processing** | csvtojson, Mongoose                                     |
-| **Deployment**      | AWS *(Future Deployment)*                               |
+
 
