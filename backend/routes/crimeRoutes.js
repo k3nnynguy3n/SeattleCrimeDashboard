@@ -1,32 +1,50 @@
 const express = require("express");
 const router = express.Router();
-const Crime = require("../models/crime"); // Ensure your model is correctly referenced
+const Crime = require("../models/crime");
 
-// API route to fetch filtered crime data
+// GET /api/crimes/filtered-crimes
 router.get("/filtered-crimes", async (req, res) => {
   try {
-    const { year, time, nibrsGroup, nibrsOffenseCode, address } = req.query;
+    const { year, nibrsGroup, nibrsOffenseCode, address } = req.query;
 
     let filter = {};
 
+    // 1) Filter by year → match the start of `offense_start` (e.g., "2020")
     if (year) {
-      filter["Report DateTime"] = { $regex: new RegExp(`^${year}`) }; // Match reports from that year
-    }
-    if (nibrsGroup) {
-      filter["Group A B"] = nibrsGroup; // A or B classification
-    }
-    if (nibrsOffenseCode) {
-      filter["Offense Code"] = { $regex: new RegExp(nibrsOffenseCode, "i") }; // Partial match
-    }
-    if (address) {
-      filter["100 Block Address"] = { $regex: new RegExp(address, "i") }; // Partial match for addresses
+      // Convert the year (e.g. "2020") into a start/end date
+    const startOfYear = new Date(`${year}-01-01T00:00:00Z`);
+    const endOfYear = new Date(`${year}-12-31T23:59:59Z`);
+
+    // Filter for offense_start between those dates
+    filter["offense_start"] = { $gte: startOfYear, $lte: endOfYear };
     }
 
-    const filteredCrimes = await Crime.find(filter).limit(100); // Limit to avoid performance issues
-    res.json({ totalCrimes: filteredCrimes.length, data: filteredCrimes });
+    // 2) Filter by Group A/B
+    if (nibrsGroup) {
+      filter["group_a_b"] = nibrsGroup;
+    }
+
+    // 3) Filter by NIBRS Offense Code → matches `code`
+    if (nibrsOffenseCode) {
+      filter["code"] = { $regex: new RegExp(nibrsOffenseCode, "i") };
+    }
+
+    // 4) Filter by Address → partial match in `address` field
+    if (address) {
+      filter["address"] = { $regex: new RegExp(address, "i") };
+    }
+
+    // Fetch up to 100 results
+    const filteredCrimes = await Crime.find(filter).limit(100);
+
+    // Return JSON with total count and data
+    res.json({
+      totalCrimes: filteredCrimes.length,
+      data: filteredCrimes
+    });
   } catch (error) {
     console.error("❌ Error fetching filtered crime data:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
