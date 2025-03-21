@@ -13,13 +13,18 @@ const App = () => {
 
   const fetchCrimeData = () => {
     const queryParams = new URLSearchParams(filters);
-    const apiUrl = `http://localhost:5000/api/crimes/filtered-crimes?${queryParams.toString()}`;
-
+    const apiUrl = `http://localhost:8080/api/crimes/filtered-crimes?${queryParams.toString()}`;
+    console.log("Fetching from:", apiUrl); // Debug log
+  
     axios
       .get(apiUrl)
-      .then((response) => setCrimeData(response.data.data))
+      .then((response) => {
+        console.log("API Response:", response.data); // Debug log
+        setCrimeData(response.data.data);
+      })
       .catch((error) => console.error("Error fetching crime data:", error));
   };
+  
 
   useEffect(() => {
     fetchCrimeData();
