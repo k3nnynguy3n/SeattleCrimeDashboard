@@ -1,16 +1,21 @@
+// backend/server.js
 const express = require("express");
-const connectDB = require("./config/db");
+const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
-app.use(cors()); // Enable CORS for frontend access
+
+app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
-connectDB();
+const MONGO_URI = process.env.MONGO_URI;
+mongoose.connect(MONGO_URI)
+  .then(() => console.log("✅ MongoDB Connected Successfully!"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-// Import and use routes
-app.use("/api/crimes", require("./routes/crimeRoutes"));
+const crimeRoutes = require("./routes/crimeRoutes");
+app.use("/api/crimes", crimeRoutes);
 
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 8080; 
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
