@@ -9,7 +9,7 @@ router.get("/filtered-crimes", async (req, res) => {
 
     let filter = {};
 
-    // 1) Filter by year → match the start of `offense_start` (e.g., "2020")
+    // Filter by year → match the start of `offense_start` (e.g., "2020")
     if (year) {
       // Convert the year (e.g. "2020") into a start/end date
     const startOfYear = new Date(`${year}-01-01T00:00:00Z`);
@@ -26,7 +26,7 @@ router.get("/filtered-crimes", async (req, res) => {
 
     // 3) Filter by NIBRS Offense Code → matches `code`
     if (nibrsOffenseCode) {
-      filter["code"] = { $regex: new RegExp(nibrsOffenseCode, "i") };
+      filter["offense_code"] = { $regex: new RegExp(nibrsOffenseCode, "i") };
     }
 
     // 4) Filter by Address → partial match in `address` field
