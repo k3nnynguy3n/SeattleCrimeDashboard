@@ -3,7 +3,7 @@ import axios from "axios";
 import "../styles/app.css";
 
 const App = () => {
-  const [crimeData, setCrimeData] = useState([]);
+  const [totalCrimes, setTotalCrimes] = useState(0);
   const [filters, setFilters] = useState({
     year: null,
     nibrsGroup: null,
@@ -11,25 +11,27 @@ const App = () => {
     address: "",
   });
 
-  const fetchCrimeData = () => {
-    const queryParams = new URLSearchParams(filters);
+  const fetchCrimeCount = () => {
+    const cleanFilters = Object.fromEntries(
+      Object.entries(filters).filter(([_, v]) => v !== null && v !== "")
+    );
+    const queryParams = new URLSearchParams(cleanFilters);
     const apiUrl = `http://localhost:8080/api/crimes/filtered-crimes?${queryParams.toString()}`;
-    console.log("Fetching from:", apiUrl);
 
     axios
       .get(apiUrl)
       .then((response) => {
         console.log("API Response:", response.data);
-        setCrimeData(response.data.data);
+        setTotalCrimes(response.data.totalCrimes);
       })
       .catch((error) => {
         console.error("Error fetching crime data:", error);
-        setCrimeData([]); // fallback to empty list
+        setTotalCrimes(0);
       });
   };
 
   useEffect(() => {
-    fetchCrimeData();
+    fetchCrimeCount();
   }, [filters]);
 
   const resetFilters = () => {
@@ -43,11 +45,9 @@ const App = () => {
 
   return (
     <div className="container">
-      {/* Filters Panel */}
       <div className="filter-panel">
         <h2>Filters</h2>
 
-        {/* Year Filter */}
         <div className="filter-group">
           <h3>Year</h3>
           <div className="button-group">
@@ -55,7 +55,9 @@ const App = () => {
               <button
                 key={year}
                 className={`filter-button ${filters.year === year ? "active" : ""}`}
-                onClick={() => setFilters((prev) => ({ ...prev, year: year === prev.year ? null : year }))}
+                onClick={() =>
+                  setFilters((prev) => ({ ...prev, year: year === prev.year ? null : year }))
+                }
               >
                 {year}
               </button>
@@ -63,7 +65,6 @@ const App = () => {
           </div>
         </div>
 
-        {/* NIBRS Group Filter */}
         <div className="filter-group">
           <h3>NIBRS Group</h3>
           <div className="button-group">
@@ -71,7 +72,9 @@ const App = () => {
               <button
                 key={group}
                 className={`filter-button ${filters.nibrsGroup === group ? "active" : ""}`}
-                onClick={() => setFilters((prev) => ({ ...prev, nibrsGroup: group === prev.nibrsGroup ? null : group }))}
+                onClick={() =>
+                  setFilters((prev) => ({ ...prev, nibrsGroup: group === prev.nibrsGroup ? null : group }))
+                }
               >
                 {group}
               </button>
@@ -79,7 +82,6 @@ const App = () => {
           </div>
         </div>
 
-        {/* NIBRS Offense Code */}
         <div className="search-container">
           <h3>NIBRS Offense Code</h3>
           <input
@@ -87,11 +89,12 @@ const App = () => {
             className="search-input"
             placeholder="e.g. 120"
             value={filters.nibrsOffenseCode}
-            onChange={(e) => setFilters((prev) => ({ ...prev, nibrsOffenseCode: e.target.value }))}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, nibrsOffenseCode: e.target.value }))
+            }
           />
         </div>
 
-        {/* Address */}
         <div className="search-container">
           <h3>Address / Neighborhood</h3>
           <input
@@ -99,29 +102,20 @@ const App = () => {
             className="search-input"
             placeholder="e.g. ROOSEVELT"
             value={filters.address}
-            onChange={(e) => setFilters((prev) => ({ ...prev, address: e.target.value }))}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, address: e.target.value }))
+            }
           />
         </div>
 
-        <button className="reset-button" onClick={resetFilters}>Reset Filters</button>
+        <button className="reset-button" onClick={resetFilters}>
+          Reset Filters
+        </button>
       </div>
 
-      {/* Display Area */}
       <div className="content-area">
         <h1>Seattle Crime Dashboard</h1>
-        <p>Total Crimes Found: {crimeData.length}</p>
-
-        {crimeData.length === 0 ? (
-          <p>No data found. Adjust filters or try a different year.</p>
-        ) : (
-          <ul>
-            {crimeData.slice(0, 10).map((crime, index) => (
-              <li key={index}>
-                <strong>{crime.offense}</strong> — {crime.address}
-              </li>
-            ))}
-          </ul>
-        )}
+        <p>Total Crimes Found: {totalCrimes.toLocaleString()}</p>
       </div>
     </div>
   );
