@@ -55,11 +55,11 @@ const App = () => {
       <div className="filter-panel">
         <h2>Filters</h2>
 
-        {/* Years Buttons (2008 - 2020) */}
+        {/* Years Buttons (2008 - 2024) */}
         <div className="filter-group">
           <h3>Year</h3>
           <div className="button-group">
-            {Array.from({ length: 2020 - 2008 + 1 }, (_, i) => (2008 + i).toString()).map((year) => (
+            {Array.from({ length: 2024 - 2008 + 1 }, (_, i) => (2008 + i).toString()).map((year) => (
               <button
                 key={year}
                 className={`filter-button ${filters.year === year ? "active" : ""}`}
