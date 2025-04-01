@@ -20,10 +20,13 @@ body {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* Ensure top and bottom content split */
   align-items: center;
   text-align: center;
+  overflow-y: auto;
 }
 
+/* Heading Styling */
 .filter-panel h2 {
   font-size: 22px;
   font-weight: bold;
@@ -114,19 +117,72 @@ body {
   text-align: center;
 }
 
+/* About Dashboard Styling */
+.about-box {
+  background-color: #454343;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 30px;
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333;
+  width: 85%;
+  max-width: none;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  align-self: center;
+}
+
+.about-box h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: white; 
+}
+
+.about-box p {
+  margin-bottom: 16px;
+  text-align: left;
+  color: white;
+}
+
 /* NIBRS Info Link */
 .NIBRS-info-link {
   margin-top: 10px;
-  text-align: center;
+  text-align: center; 
+  width: 100%;
 }
 
 .NIBRS-info-link a {
-  color: #88c0d0;
+  color: #0077cc;
   text-decoration: none;
   font-weight: bold;
+  display: inline-block; 
 }
 
-.info-link a:hover {
-  text-decoration: none; 
-  color: #7ee0de;       
+.NIBRS-info-link a:hover {
+  color: #42a5ec;
+}
+
+/* Responsive Handling */
+@media (max-width: 768px) {
+  .filter-panel {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .about-box {
+    width: 95%;
+    max-width: none;
+  }
+
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .content-area {
+    margin-left: 0;
+    margin-top: 20px;
+  }
 }
