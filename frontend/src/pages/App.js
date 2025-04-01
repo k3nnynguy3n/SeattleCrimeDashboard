@@ -54,7 +54,6 @@ const App = () => {
       {/* Filter Sidebar */}
       <div className="filter-panel">
         <h2>Filters</h2>
-
         {/* Years Buttons (2008 - 2024) */}
         <div className="filter-group">
           <h3>Year</h3>
@@ -72,7 +71,7 @@ const App = () => {
             ))}
           </div>
         </div>
-          
+
         {/* NIBRS Group buttons (A or B) */}
         <div className="filter-group">
           <h3>NIBRS Group</h3>
@@ -90,7 +89,7 @@ const App = () => {
             ))}
           </div>
         </div>
-        
+
         {/* Search Bar for Offense Code */}
         <div className="search-container">
           <h3>NIBRS Offense Code</h3>
@@ -104,7 +103,7 @@ const App = () => {
             }
           />
         </div>
-        
+
         {/* Search Bar for Address/Neighborhood */}
         <div className="search-container">
           <h3>Address / Neighborhood</h3>
@@ -118,26 +117,38 @@ const App = () => {
             }
           />
         </div>
-        
+
         {/* Reset all filters back to default */}
         <button className="reset-button" onClick={resetFilters}>
           Reset Filters
         </button>
-        
-        {/* External FBI resource for understanding offense codes */}
-        <div className="NIBRS-info-link"> 
-          <a
-          href="https://ucr.fbi.gov/nibrs/2011/resources/nibrs-offense-codes"
-          target="_blank"
-          rel="noopener noreferrer"
-          > 
-          ℹ️ Guide to NIBRS Offense Codes & Groups 
-          </a> 
-        </div>
 
+        {/* About section with external link */}
+        <div className="about-box">
+          <h2>About the Dashboard</h2>
+          <p>
+            This Seattle Crime Dashboard allows you to explore reported crime
+            incidents from 2008 to present. Use the filters above to narrow down
+            data by year, offense group, offense code, or address/neighborhood. Due to 
+            storage limitations and data duplication, not every record is imported — 
+            this dashboard presents a representative subset of the available data to 
+            give a clear picture of crime trends in the city. Although it may not include 
+            every single incident, the information displayed remains highly accurate 
+            and reflective of broader patterns to the best of my ability.
+          </p>
+          <div className="NIBRS-info-link">
+            <a
+              href="https://ucr.fbi.gov/nibrs/2011/resources/nibrs-offense-codes"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ℹ️ Guide to NIBRS Offense Codes & Groups
+            </a>
+          </div>
+        </div>
       </div>
-      
-       {/* Main dashboard output section */}
+
+      {/* Main dashboard output section */}
       <div className="content-area">
         <h1>Seattle Crime Dashboard</h1>
         <p>Total Crimes Found: {totalCrimes.toLocaleString()}</p>
