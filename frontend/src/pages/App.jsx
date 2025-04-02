@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/app.css";
+import HeatMap from "../components/HeatMap"; 
 
 const App = () => {
   // State to hold the total number of crimes
   const [totalCrimes, setTotalCrimes] = useState(0);
+  const [mapKey, setMapKey] = useState(0); // 🔁 Key to refresh HeatMap
+
   // Filters for the webpage
   const [filters, setFilters] = useState({
     year: null,
@@ -47,6 +50,7 @@ const App = () => {
       nibrsOffenseCode: "",
       address: "",
     });
+    setMapKey(prev => prev + 1); // 🔁 Force HeatMap remount
   };
 
   return (
@@ -152,6 +156,9 @@ const App = () => {
       <div className="content-area">
         <h1>Seattle Crime Dashboard</h1>
         <p>Total Crimes Found: {totalCrimes.toLocaleString()}</p>
+        <div className="heatmap">
+          <HeatMap key={mapKey} />
+        </div>
       </div>
     </div>
   );
