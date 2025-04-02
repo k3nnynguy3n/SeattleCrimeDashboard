@@ -164,6 +164,15 @@ body {
   color: #42a5ec;
 }
 
+/* Heatmap Container Styling */
+.heatmap {
+  height: 200%;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
 /* Responsive Handling */
 @media (max-width: 768px) {
   .filter-panel {
