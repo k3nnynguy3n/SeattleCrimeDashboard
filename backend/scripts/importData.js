@@ -61,9 +61,11 @@ const importCSV = async () => {
                 offense_start: offenseStart,
                 group_a_b: crime['Group A B']?.trim() || null,
                 offense_code: crime['Offense Code']?.trim() || null,
-                address: crime['100 Block Address']?.trim() || null
+                address: crime['100 Block Address']?.trim() || null,
+                latitude: crime['Latitude'] ? parseFloat(crime['Latitude']) : null,
+                longitude: crime['Longitude'] ? parseFloat(crime['Longitude']) : null
             };
-        }).filter(c => c.report_number && c.offense_start);
+        }).filter(c => c.report_number && c.offense_start && c.latitude && c.longitude);
 
         if (formattedCrimes.length === 0) {
             console.log("⚠️ No valid records to import.");
