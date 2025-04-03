@@ -1,5 +1,7 @@
 # 📝 Seattle Crime Dashboard - 🚧 *Currently in Progress!*  
-📊 **Analyzing and Predicting Crime Trends in Seattle (2008 - February 4th, 2020)**  
+📊 **Analyzing and Predicting Crime Trends in Seattle (2008 - 2024)**  
+
+![Image](https://github.com/user-attachments/assets/f8833b66-8cf3-449a-94fc-0089f21d8b87)
 
 ## 📍 Overview  
 
@@ -18,12 +20,12 @@ I hope that this tool can bridge the gap between raw data and useful information
 ✅ **Comprehensive Crime Dataset** – Over **1.1 million records** from Seattle crime data.  
 
 ✅ **Dynamic Filtering & Sorting**  
-   - **Date & Time** – Day/night trends, seasonal patterns  
-   - **Location** – Neighborhoods, precincts, beats  
-   - **Crime Type** – Violent, property, drug-related, etc.  
-   - **Demographics** – Sorting by age, gender, and other attributes  
+   - **Year** – Filter by year from 2008 - 2024 
+   - **NIBRS Group** – NIBRS (National Incident-Based Reporting System) Groups categorize crimes into Group A (more serious offenses like assault, burglary, etc.) and Group B (less serious offenses like disorderly conduct or DUI)
+   - **NIBRS Offense Codes** – A unique NIBRS offense code to standardize reporting and categorize the crime
+   - **Address/Neighborhood** – Sorting by a specific area 
 
-✅ **Interactive Visualizations** – Dynamic **heatmaps, charts, and graphs** powered by **D3.js**.  
+✅ **Interactive Visualizations** – Dynamic **heatmaps, charts, and graphs**.  
 
 
 🚀 Future Enhancements will include machine learning-powered crime predictions, estimating where, when, and what type of crimes may occur based on historical patterns.
@@ -33,7 +35,7 @@ I hope that this tool can bridge the gap between raw data and useful information
 | **Category**         | **Technologies**                                         |
 |----------------------|---------------------------------------------------------|
 | **Backend**         | Node.js, Express.js, MongoDB Atlas, RESTful API         |
-| **Frontend**        | D3.js, React.js                                         |
-| **Data Processing** | csvtojson, Mongoose                                     |
+| **Frontend**        | React.js, HTML/CSS                                      |
+| **Data Processing** | csvtojson, Mongoose, JSON                               |
 
 
