@@ -1,4 +1,4 @@
-# 📝 Seattle Crime Dashboard - 🚧 *Currently in Progress!*  
+# 📝 Seattle Crime Dashboard
 📊 **Analyzing and Predicting Crime Trends in Seattle (2008 - 2024)**  
 
 ![Image](https://github.com/user-attachments/assets/f8833b66-8cf3-449a-94fc-0089f21d8b87)
