@@ -40,4 +40,21 @@ router.get("/filtered-crimes", async (req, res) => {
   }
 });
 
+// GET /api/crimes/heatmap
+router.get("/heatmap", async (req, res) => {
+  try {
+    const crimes = await Crime.find({}, "latitude longitude");
+    res.json(crimes);
+  } catch (error) {
+    console.error("Error fetching heatmap data:", error);
+    res.status(500).json({ error: "Heatmap fetch failed" });
+  }
+});
+
+// GET /api/crimes/test
+router.get("/test", (req, res) => {
+  console.log("/test route");
+  res.json({ message: "Router works!" });
+});
+
 module.exports = router;
