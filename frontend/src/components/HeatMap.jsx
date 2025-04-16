@@ -49,7 +49,7 @@ const CrimeHeatMap = () => {
     <MapContainer
       center={[47.6062, -122.3321]}
       zoom={12}
-      style={{ height: "100vh", width: "100%" }}
+      style={{ height: "80vh", width: "100%" }}
     >
       <TileLayer
         attribution='&copy; OpenStreetMap contributors'
