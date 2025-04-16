@@ -16,7 +16,7 @@ const HeatLayer = ({ points }) => {
       blur: 10,
       maxZoom: 17,
       gradient: {
-        0.2: 'limr',
+        0.2: 'lime',
         0.4: 'yellow',
         0.6: 'orange',
         0.8: 'red'
