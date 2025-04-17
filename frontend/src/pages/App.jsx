@@ -50,7 +50,7 @@ const App = () => {
       nibrsOffenseCode: "",
       address: "",
     });
-    setMapKey(prev => prev + 1); // 🔁 Force HeatMap remount
+    setMapKey(prev => prev + 1); // Force HeatMap remount
   };
 
   return (
