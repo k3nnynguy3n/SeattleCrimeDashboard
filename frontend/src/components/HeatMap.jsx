@@ -31,11 +31,17 @@ const HeatLayer = ({ points }) => {
   return null;
 };
 
-const CrimeHeatMap = () => {
+const CrimeHeatMap = ({ filters }) => {
   const [heatPoints, setHeatPoints] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/crimes/heatmap")
+    const cleanFilters = Object.fromEntries(
+      Object.entries(filters).filter(([_, v]) => v !== null && v !== "")
+    );
+    const queryParams = new URLSearchParams(cleanFilters);
+    const url = `http://localhost:8080/api/crimes/filtered-crimes/heatmap?${queryParams.toString()}`;
+
+    axios.get(url)
       .then((res) => {
         const formatted = res.data
           .filter(d => d.latitude && d.longitude)
@@ -43,13 +49,13 @@ const CrimeHeatMap = () => {
         setHeatPoints(formatted);
       })
       .catch(err => console.error("Heatmap data error:", err));
-  }, []);
+  }, [filters]);
 
   return (
     <MapContainer
       center={[47.6062, -122.3321]}
       zoom={12}
-      style={{ height: "80vh", width: "100%" }}
+      style={{ height: "100vh", width: "100%" }}
     >
       <TileLayer
         attribution='&copy; OpenStreetMap contributors'
