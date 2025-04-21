@@ -157,7 +157,7 @@ const App = () => {
         <h1>Seattle Crime Dashboard</h1>
         <p>Total Crimes Found: {totalCrimes.toLocaleString()}</p>
         <div className="heatmap">
-          <HeatMap key={mapKey} />
+          <HeatMap filters={filters} key={mapKey} />
         </div>
       </div>
     </div>
