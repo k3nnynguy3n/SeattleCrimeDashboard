@@ -51,6 +51,38 @@ router.get("/heatmap", async (req, res) => {
   }
 });
 
+router.get("/filtered-crimes/heatmap", async (req, res) => {
+  try {
+    const { year, nibrsGroup, nibrsOffenseCode, address } = req.query;
+    const filter = {};
+
+    if (year) {
+      const start = new Date(`${year}-01-01T00:00:00Z`);
+      const end = new Date(`${year}-12-31T23:59:59Z`);
+      filter.offense_start = { $gte: start, $lte: end };
+    }
+
+    if (nibrsGroup) {
+      filter.group_a_b = nibrsGroup;
+    }
+
+    if (nibrsOffenseCode) {
+      filter.offense_code = { $regex: new RegExp(nibrsOffenseCode, "i") };
+    }
+
+    if (address) {
+      filter.address = { $regex: new RegExp(address, "i") };
+    }
+
+    const crimes = await Crime.find(filter, "latitude longitude");
+    res.json(crimes);
+  } catch (error) {
+    console.error("🔥 Heatmap fetch error:", error);
+    res.status(500).json({ error: "Failed to fetch heatmap data" });
+  }
+});
+
+
 // GET /api/crimes/test
 router.get("/test", (req, res) => {
   console.log("/test route");
